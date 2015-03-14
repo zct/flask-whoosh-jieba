@@ -80,11 +80,14 @@ def get_entry_for_page(page,length,entries):
 
 def whoosh_search(keyword):
     indexFile = open_dir(app.config['WHOOSH_BASE'])
-    print indexFile.schema
     searchQuery = QueryParser("content", indexFile.schema).parse(keyword)
     resultsList = []
-    with indexFile.searcher(closereader=False) as searcher:
-        resultsList = searcher.search(searchQuery, limit=1000, terms=True)
+    with indexFile.searcher() as searcher:
+        # resultsList.append(searcher.search(searchQuery, limit=1000, terms=True))
+        searchResult = searcher.search(searchQuery, limit=1000, terms=True)
+        for result in searchResult:
+            # resultsList.append(list(result["title"], result["path"]))
+            resultsList.append(("title:" + result["title"], result["path"]))
     return resultsList
 
 @app.route('/search', methods=['GET','POST'])
@@ -97,7 +100,6 @@ def search():
         keyword = request.form['Text']
         # 搜索
         entries = whoosh_search(keyword)
-        print "test"
         print entries
     else:
         try:

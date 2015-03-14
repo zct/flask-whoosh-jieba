@@ -17,9 +17,9 @@ print len(nameArgs)
 
     </thead>
     <tbody>
-    {% for entry in entries %}
+    {% for entry, url in entries %}
     <tr>
-        <td>{{entry}}</td>
+        <td><a href={{url}}>{{entry}}</a></td>
     </tr>
     {% endfor %}
     </tbody>
