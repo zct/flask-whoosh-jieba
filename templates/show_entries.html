@@ -1,0 +1,39 @@
+{% extends "layout.html"%}
+print len(nameArgs)
+{% block body %}
+<form action="{{url_for('search') }}" method=post class=add-entry>
+	<d1>
+	<dt>Text:
+	<dd><textarea name=Text type=text  row=1 cols=50></textarea>
+	<dd><input type=submit value=Search>
+	</d1>
+</form>
+
+{% if  show_result %}
+{{ pagination.info|safe}}
+{{ pagination.links|safe}}
+<table>
+    <thead>
+
+    </thead>
+    <tbody>
+    {% for entry in entries %}
+    <tr>
+        <td>{{entry}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{{ pagination.links|safe }}
+{% endif %}
+
+<!-- <ul class=entries>
+{% for entry in entries %}
+
+<li><h2><a href="{{url_for('download')}}">{{ entry }}</a></h2>
+{% else %}
+<li><em>Unbelievable. No entries here so far</em>
+{%endfor %}
+</ul> -->
+{% endblock %}
+
